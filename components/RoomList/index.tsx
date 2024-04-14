@@ -1,14 +1,18 @@
-/* eslint-disable @next/next/no-img-element */
-
 import { RoomType } from '@/interface'
 import { ReactNode } from 'react'
+import Image from 'next/image'
+import { BLUR_DATA_URL } from '@/constants'
 
 export function RoomItem({ room }: { room: RoomType }) {
   return (
     <div key={room.id}>
-      <img
+      <Image
         src={room?.images?.[0]}
         alt={room.title}
+        width={500}
+        height={500}
+        placeholder="blur"
+        blurDataURL={BLUR_DATA_URL}
         className="rounded-md w-full h-auto object-fit"
       />
       <div className="mt-2 font-semibold text-sm">{room.title}</div>
