@@ -6,7 +6,10 @@ import { useQuery } from 'react-query'
 import axios from 'axios'
 import { RoomType } from '@/interface'
 import { BsMap } from 'react-icons/bs'
-import { SetStateAction } from 'react'
+import { DEFAULT_LAT, DEFAULT_LNG, ZOOM_LEVEL } from '@/constants'
+import { useSetRecoilState } from 'recoil'
+import { selectedRoomState } from '@/atom'
+import { FullPageLoader } from '../Loader'
 
 declare global {
   interface Window {
@@ -14,15 +17,9 @@ declare global {
   }
 }
 
-const DEFAULT_LAT = 37.565337
-const DEFAULT_LNG = 126.9772095
-const ZOOM_LEVEL = 7
+export default function Map() {
+  const setSelectedRoom = useSetRecoilState(selectedRoomState)
 
-export default function Map({
-  setSelectedRoom,
-}: {
-  setSelectedRoom: React.Dispatch<SetStateAction<RoomType | null>>
-}) {
   const fetchRooms = async () => {
     const { data } = await axios('/api/rooms')
     return data as RoomType[]
@@ -93,13 +90,15 @@ export default function Map({
         src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_CLIENT}&autoload=false`}
         onReady={loadKakoMap}
       />
-      {isSuccess && (
+      {isSuccess ? (
         <Script
           strategy="afterInteractive"
           type="text/javascript"
           src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_CLIENT}&autoload=false`}
           onReady={loadKakoMap}
         />
+      ) : (
+        <FullPageLoader />
       )}
       <div id="map" className="w-full h-screen" />
     </>

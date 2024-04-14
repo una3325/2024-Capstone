@@ -37,3 +37,9 @@ export interface FaqType {
   title: string
   desc: string
 }
+
+export interface LocationType {
+  lat?: string | null
+  lng?: string | null
+  zoom?: number
+}
