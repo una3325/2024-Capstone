@@ -1,35 +1,74 @@
-import { PrismaClient } from '@prisma/client'
+'use client'
+import React, { useEffect, useRef, useCallback } from 'react'
 
-export default async function Home() {
-  const data = await getRooms()
+import CategoryList from '@/components/CategoryList'
+import { GridLayout, RoomItem } from '@/components/RoomList'
+import { useInfiniteQuery } from 'react-query'
+
+import axios from 'axios'
+
+import { RoomType } from '@/interface'
+
+import { Loader, LoaderGrid } from '@/components/Loader'
+import useIntersectionObserver from '@/hooks/useIntersectionObserver'
+
+export default function Home() {
+  const ref = useRef<HTMLDivElement | null>(null)
+  const pageRef = useIntersectionObserver(ref, {})
+  const isPageEnd = !!pageRef?.isIntersecting
+
+  const fetchRooms = async ({ pageParam = 1 }) => {
+    const { data } = await axios('/api/rooms?page=' + pageParam, {
+      params: {
+        limit: 12,
+        page: pageParam,
+      },
+    })
+
+    return data
+  }
+
+  const {
+    data: rooms,
+    isFetching,
+    fetchNextPage,
+    isFetchingNextPage,
+    hasNextPage,
+    isError,
+    isLoading,
+  } = useInfiniteQuery('rooms', fetchRooms, {
+    getNextPageParam: (lastPage, pages) =>
+      lastPage?.data?.length > 0 ? lastPage.page + 1 : undefined,
+  })
+
+  useEffect(() => {
+    let timerId: NodeJS.Timeout | undefined
+
+    if (isPageEnd && hasNextPage) {
+      timerId = setTimeout(() => {
+        fetchNextPage()
+      }, 500)
+    }
+  }, [fetchNextPage, hasNextPage, isPageEnd])
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mb-20 sm:px-4 md:px-8 lg:px-16">
-      {data?.map((room) => (
-        <div key={room.id}>
-          <img
-            src={room?.images?.[0]}
-            alt={room.title}
-            className="rounded-md w-full h-auto object-fill"
-          />
-          <div className="mt-2 font-semibold text-sm">{room.title}</div>
-          <span className="text-xs px-2 py-1 rounded-full bg-black text-white mt-1">
-            {room.category}
-          </span>
-          <div className="mt-1 text-gray-400 text-sm">{room.address}</div>
-          <div className="mt-1 text-sm">
-            {room?.price?.toLocaleString()}원
-            <span className="text-gray-500"> /박</span>
-          </div>
-        </div>
-      ))}
-    </div>
+    <>
+      <CategoryList />
+      <GridLayout>
+        {isLoading || isFetching ? (
+          <LoaderGrid />
+        ) : (
+          rooms?.pages?.map((page, index) => (
+            <React.Fragment key={index}>
+              {page?.data?.map((room: RoomType) => (
+                <RoomItem room={room} key={room.id} />
+              ))}
+            </React.Fragment>
+          ))
+        )}
+      </GridLayout>
+      {(isFetching || hasNextPage || isFetchingNextPage) && <Loader />}
+      <div className="w-full touch-none h-10 mb-10" ref={ref} />
+    </>
   )
-}
-
-async function getRooms() {
-  const prisma = new PrismaClient()
-  const data = await prisma.room.findMany()
-
-  return data
 }

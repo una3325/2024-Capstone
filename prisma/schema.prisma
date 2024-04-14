@@ -47,3 +47,9 @@ model Room {
   user               User?      @relation(fields: [userId],references: [id], onDelete: Cascade)
   @@index([userId])
 }
+
+model Faq {
+  id                 Int       @id @default(autoincrement())
+  title              String
+  desc               String
+}
