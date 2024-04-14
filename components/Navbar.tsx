@@ -33,7 +33,7 @@ export default function Navbar() {
   return (
     <nav
       className={cn(
-        'h-20 z-10 border boerder-b-gray-20 w-full shadow-sm p-4 sm:px-10 flex justify-between items-center align-middle fixed top-0 bg-white',
+        'h-20 z-[20] border border-b-gray-20 w-full shadow-sm p-4 sm:px-10 flex justify-between items-center align-middle fixed top-0 bg-white',
         {
           'h-44': showFilter === true,
           '!items-start': showFilter === true,
