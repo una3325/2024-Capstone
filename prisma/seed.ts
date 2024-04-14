@@ -1,7 +1,6 @@
 import { PrismaClient } from '@prisma/client'
 import { fakerKO as faker } from '@faker-js/faker'
 
-import { title } from 'process'
 
 const prisma = new PrismaClient()
 export const CATEGORY = [
