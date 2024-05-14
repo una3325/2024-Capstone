@@ -51,6 +51,7 @@ model User {
   name       String? 
   image      String? 
   desc       String? 
+  emailVerified  Boolean?
   rooms      Room[] 
   account     Account[]
   sessions    Session[]
