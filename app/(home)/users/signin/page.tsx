@@ -1,14 +1,18 @@
 'use client'
-
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { signIn, useSession } from 'next-auth/react'
 import { FcGoogle } from 'react-icons/fc'
+import { SiNaver } from 'react-icons/si'
 import toast from 'react-hot-toast'
 
 export default function SignInPage() {
+  const router = useRouter()
   const { status } = useSession()
 
+  console.log(status)
+
   const handleClickGoogle = () => {
-    console.log('login!')
     try {
       signIn('google', { callbackUrl: '/' })
     } catch (e) {
@@ -16,6 +20,22 @@ export default function SignInPage() {
       toast.error('다시 시도해주세요')
     }
   }
+
+  const handleClickNaver = () => {
+    try {
+      signIn('naver', { callbackUrl: '/' })
+    } catch (e) {
+      console.log(e)
+      toast.error('다시 시도해주세요')
+    }
+  }
+
+  useEffect(() => {
+    if (status === 'authenticated') {
+      toast.error('접근할 수 없습니다.')
+      router.replace('/')
+    }
+  }, [router, status])
 
   return (
     <div className="max-w-xl mx-auto pt-10 pb-24">
@@ -37,8 +57,17 @@ export default function SignInPage() {
           onClick={handleClickGoogle}
           className="relative border border-gray-700 rounded-md py-3 text-sm hover:bg-black/5 text-center font-semibold"
         >
-          <FcGoogle className="absolute left-5 text-xl" />
+          {' '}
+          <FcGoogle className="absolute left-5 text-xl my-auto inset-y-0" />
           구글로 로그인하기
+        </button>
+        <button
+          type="button"
+          onClick={handleClickNaver}
+          className="relative border border-gray-700 rounded-md py-3 text-sm hover:bg-black/5 text-center font-semibold"
+        >
+          <SiNaver className="absolute left-6 text-green-400 my-auto inset-y-0" />
+          네이버로 로그인하기
         </button>
       </div>
     </div>
