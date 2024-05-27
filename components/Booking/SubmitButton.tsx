@@ -32,7 +32,6 @@ export default function SubmitButton({ title }: { title: string }) {
     })
 
     if (res.status === 200) {
-      toast.success('예약을 완료했습니다.')
       router.replace(
         `/payments?customerKey=${session?.user.id}&roomTitle=${title}&checkIn=${checkIn}&checkOut=${checkOut}&guestCount=${guestCount}&totalAmount=${totalAmount}&totalDays=${totalDays}&bookingId=${res?.data.id}`,
       )

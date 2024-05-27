@@ -34,6 +34,7 @@ export async function GET(req: Request) {
       include: {
         user: true,
         room: true,
+        payments: true,
       },
     })
 
