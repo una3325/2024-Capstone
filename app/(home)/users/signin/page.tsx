@@ -4,14 +4,14 @@ import { useRouter } from 'next/navigation'
 import { signIn, useSession } from 'next-auth/react'
 import { FcGoogle } from 'react-icons/fc'
 import { SiNaver } from 'react-icons/si'
+import { RiKakaoTalkFill } from 'react-icons/ri'
+
 import toast from 'react-hot-toast'
 
 export default function SignInPage() {
   const router = useRouter()
   const { status } = useSession()
-
   console.log(status)
-
   const handleClickGoogle = () => {
     try {
       signIn('google', { callbackUrl: '/' })
@@ -20,10 +20,18 @@ export default function SignInPage() {
       toast.error('다시 시도해주세요')
     }
   }
-
   const handleClickNaver = () => {
     try {
       signIn('naver', { callbackUrl: '/' })
+    } catch (e) {
+      console.log(e)
+      toast.error('다시 시도해주세요')
+    }
+  }
+
+  const handleClickKakao = () => {
+    try {
+      signIn('kakao', { callbackUrl: '/' })
     } catch (e) {
       console.log(e)
       toast.error('다시 시도해주세요')
@@ -36,7 +44,6 @@ export default function SignInPage() {
       router.replace('/')
     }
   }, [router, status])
-
   return (
     <div className="max-w-xl mx-auto pt-10 pb-24">
       <div className="flex flex-col gap-6">
@@ -57,7 +64,6 @@ export default function SignInPage() {
           onClick={handleClickGoogle}
           className="relative border border-gray-700 rounded-md py-3 text-sm hover:bg-black/5 text-center font-semibold"
         >
-          {' '}
           <FcGoogle className="absolute left-5 text-xl my-auto inset-y-0" />
           구글로 로그인하기
         </button>
@@ -68,6 +74,14 @@ export default function SignInPage() {
         >
           <SiNaver className="absolute left-6 text-green-400 my-auto inset-y-0" />
           네이버로 로그인하기
+        </button>
+        <button
+          type="button"
+          onClick={handleClickKakao}
+          className="relative border border-gray-700 rounded-md py-3 text-sm hover:bg-black/5 text-center font-semibold"
+        >
+          <RiKakaoTalkFill className="absolute left-5 text-yellow-950 text-xl my-auto inset-y-0" />
+          카카오로 로그인하기
         </button>
       </div>
     </div>
