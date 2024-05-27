@@ -134,9 +134,51 @@ model Booking {
   createdAt       DateTime    @default(now())
   updatedAt       DateTime    @default(now())
   status          BookingStatus
+  payments        Payment[]
 }
 
 enum BookingStatus {
   SUCCESS
   CANCEL
+  }
+
+model Payment {
+  id             String       @id @default(uuid())
+  bookingId      Int           
+  booking        Booking      @relation(fields: [bookingId], references: [id])
+  paymentKey     String?      // 결제의 키 값
+  amount         Int
+  type           PaymentType?
+  orderId        String       @unique
+  orderName      String?
+  mId            String?
+  method         String?
+  status         PaymentStatus
+  requestedAt    String?
+  approvedAt     String?
+  cardNumber     String?
+  cardType       String?
+  receiptUrl     String?
+  checkoutUrl    String?
+  failureCode    String?
+  failureMessage String?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @default(now())
+}
+
+enum PaymentType {
+  NORMAL
+  BILLING
+  BRANDPAY
+}
+
+enum PaymentStatus {
+  READY
+  IN_PROGRESS
+  WAITING_FOR_DEPOSIT
+  DONE
+  CANCELED
+  PARTIAL_CANCELED
+  ABORTED
+  EXPIRED
 }
