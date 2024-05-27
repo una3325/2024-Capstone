@@ -49,7 +49,7 @@ export default function CommentListModal({
 
   useEffect(() => {
     let timerId: NodeJS.Timeout | undefined
-    console.log(isPageEnd, hasNextPage)
+
     if (isPageEnd && hasNextPage) {
       timerId = setTimeout(() => {
         fetchNextPage()
