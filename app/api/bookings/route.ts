@@ -17,7 +17,9 @@ interface BookingProps {
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url)
   const id = searchParams.get('id') as string
-
+  const page = searchParams.get('page') as string
+  const limit = searchParams.get('limit') as string
+  const userId = searchParams.get('userId') as string
   if (id) {
     const booking = await prisma.booking.findFirst({
       where: {
@@ -32,6 +34,35 @@ export async function GET(req: Request) {
     return NextResponse.json(booking, {
       status: 200,
     })
+  } else if (page) {
+    const count = await prisma.booking.count({
+      where: {
+        userId: userId,
+      },
+    })
+    const skipPage = parseInt(page) - 1
+    const bookings = await prisma.booking.findMany({
+      orderBy: { updatedAt: 'desc' },
+      where: {
+        userId: userId,
+      },
+      take: parseInt(limit),
+      skip: skipPage * parseInt(limit),
+      include: {
+        user: true,
+        room: true,
+      },
+    })
+
+    return NextResponse.json(
+      {
+        page: parseInt(page),
+        data: bookings,
+      },
+      {
+        status: 200,
+      },
+    )
   }
 }
 

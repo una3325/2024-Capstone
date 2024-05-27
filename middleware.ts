@@ -7,5 +7,6 @@ export const config = {
     '/users/edit',
     '/users/likes',
     '/users/comments',
+    '/users/bookings/:path*',
   ],
 }
