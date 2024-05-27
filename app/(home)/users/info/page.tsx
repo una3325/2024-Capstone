@@ -4,9 +4,11 @@
 import { UserType } from '@/interface'
 import axios from 'axios'
 import { signOut, useSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 import { useQuery } from 'react-query'
 
 export default function UserInfoPage() {
+  const router = useRouter()
   const { status } = useSession()
 
   const fetchUser = async () => {
@@ -18,13 +20,12 @@ export default function UserInfoPage() {
     enabled: status === 'authenticated',
   })
 
-  console.log(user)
-
   return (
     <div className="mt-10 max-w-3xl mx-auto px-4">
       <div className="flex justify-between gap-4">
         <h1 className="text-3xl font-semibold">개인정보</h1>
         <button
+          onClick={() => router.push('/users/edit')}
           type="button"
           className="text-sm font-semibold underline px-4 py-1.5 rounded-md hover:bg-black/5"
         >
