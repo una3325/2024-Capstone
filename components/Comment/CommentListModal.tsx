@@ -1,16 +1,61 @@
+'use client'
+
 /* eslint-disable @next/next/no-img-element */
 import { Dialog, Transition } from '@headlessui/react'
-import { Fragment } from 'react'
+import React, { Fragment, useEffect, useRef } from 'react'
 import { AiOutlineClose } from 'react-icons/ai'
-import { COMMENTS } from './CommentList'
+import axios from 'axios'
+import { useInfiniteQuery } from 'react-query'
+import { CommentApiType, CommentType } from '@/interface'
+import useIntersectionObserver from '@/hooks/useIntersectionObserver'
+import { Loader } from '../Loader'
 
 export default function CommentListModal({
   isOpen,
   closeModal,
+  roomId,
 }: {
   isOpen: boolean
   closeModal: () => void
+  roomId: number
 }) {
+  const ref = useRef<HTMLDivElement | null>(null)
+  const pageRef = useIntersectionObserver(ref, {
+    rootMargin: '10%',
+    enableObserver: !!ref.current,
+  })
+  const isPageEnd = !!pageRef?.isIntersecting
+
+  const fetchComments = async ({ pageParam = 1 }) => {
+    const { data } = await axios(
+      `/api/comments?roomId=${roomId}&page=${pageParam}&limit=6`,
+    )
+
+    return data as CommentApiType
+  }
+
+  const {
+    data: comments,
+    fetchNextPage,
+    isFetching,
+    hasNextPage,
+  } = useInfiniteQuery(`room-${roomId}-comments-infinite`, fetchComments, {
+    getNextPageParam: (lastPage: any) =>
+      lastPage?.data?.length > 0 ? lastPage.page + 1 : undefined,
+  })
+
+  useEffect(() => {
+    let timerId: NodeJS.Timeout | undefined
+    console.log(isPageEnd, hasNextPage)
+    if (isPageEnd && hasNextPage) {
+      timerId = setTimeout(() => {
+        fetchNextPage()
+      }, 500)
+    }
+
+    return () => clearTimeout(timerId)
+  }, [isPageEnd, hasNextPage, fetchNextPage])
+
   return (
     <>
       <Transition appear show={isOpen} as={Fragment}>
@@ -52,34 +97,47 @@ export default function CommentListModal({
                   >
                     후기 전체 보기
                   </Dialog.Title>
-                  <h1 className="font-semibold text-xl mb-2 mt-4">
-                    후기 248개
-                  </h1>
+
                   <div className="mt-8 flex flex-col gap-8 mx-auto max-w-lg mb-10">
-                    {COMMENTS?.slice(0, 6)?.map((comment) => (
-                      <div key={comment?.id} className="flex flex-col gap-2">
-                        <div className="flex gap-2 items-center">
-                          <img
-                            src={comment?.imageUrl || '/images/user-icon.png'}
-                            alt="profile img"
-                            width={50}
-                            height={50}
-                            className="rounded-full"
-                          />
-                          <div>
-                            <h1 className="font-semibold">
-                              {comment?.name || '-'}
-                            </h1>
-                            <div className="text-gray-500 text-xs">
-                              {comment?.createdAt}
+                    {comments?.pages?.map((page, index) => (
+                      <React.Fragment key={index}>
+                        {page.data.map((comment: CommentType) => (
+                          <div
+                            key={comment?.id}
+                            className="flex flex-col gap-2"
+                          >
+                            <div className="flex gap-2 items-center">
+                              <img
+                                src={
+                                  comment?.user?.image ||
+                                  '/images/user-icon.png'
+                                }
+                                alt="profile img"
+                                width={50}
+                                height={50}
+                                className="rounded-full"
+                              />
+                              <div>
+                                <h1 className="font-semibold">
+                                  {comment?.user?.name || '-'}
+                                </h1>
+                                <div className="text-gray-500 text-xs">
+                                  {comment?.createdAt}
+                                </div>
+                              </div>
+                            </div>
+                            <div className="max-w-lg text-gray-600">
+                              {comment?.body}
                             </div>
                           </div>
-                        </div>
-                        <div className="max-w-lg text-gray-600">
-                          {comment?.comment}
-                        </div>
-                      </div>
+                        ))}
+                      </React.Fragment>
                     ))}
+                    {(hasNextPage || isFetching) && <Loader className="mt-8" />}
+                    <div
+                      ref={ref}
+                      className="w-full h-10 mb-10 z-10 touch-none"
+                    />
                   </div>
                 </Dialog.Panel>
               </Transition.Child>
