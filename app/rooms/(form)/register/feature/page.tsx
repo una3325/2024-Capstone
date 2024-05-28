@@ -60,6 +60,13 @@ export default function RoomRegisterFeature() {
     router.push('/rooms/register/image')
   }
 
+  const onClick = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    title: keyof RoomFeatureProps,
+  ) => {
+    setValue(title, event?.target?.checked)
+  }
+
   useEffect(() => {
     if (roomForm) {
       setValue('freeCancel', roomForm?.freeCancel)
@@ -94,6 +101,7 @@ export default function RoomRegisterFeature() {
           >
             <input
               type="checkbox"
+              onClick={(e: any) => onClick(e, 'freeCancel')}
               {...register('freeCancel')}
               className="hidden"
             />
@@ -108,6 +116,7 @@ export default function RoomRegisterFeature() {
           >
             <input
               type="checkbox"
+              onClick={(e: any) => onClick(e, 'selfCheckIn')}
               {...register('selfCheckIn')}
               className="hidden"
             />
@@ -122,6 +131,7 @@ export default function RoomRegisterFeature() {
           >
             <input
               type="checkbox"
+              onClick={(e: any) => onClick(e, 'officeSpace')}
               {...register('officeSpace')}
               className="hidden"
             />
@@ -136,6 +146,7 @@ export default function RoomRegisterFeature() {
           >
             <input
               type="checkbox"
+              onClick={(e: any) => onClick(e, 'hasMountainView')}
               {...register('hasMountainView')}
               className="hidden"
             />
@@ -150,6 +161,7 @@ export default function RoomRegisterFeature() {
           >
             <input
               type="checkbox"
+              onClick={(e: any) => onClick(e, 'hasShampoo')}
               {...register('hasShampoo')}
               className="hidden"
             />
@@ -164,6 +176,7 @@ export default function RoomRegisterFeature() {
           >
             <input
               type="checkbox"
+              onClick={(e: any) => onClick(e, 'hasFreeLaundry')}
               {...register('hasFreeLaundry')}
               className="hidden"
             />
@@ -178,6 +191,7 @@ export default function RoomRegisterFeature() {
           >
             <input
               type="checkbox"
+              onClick={(e: any) => onClick(e, 'hasAirConditioner')}
               {...register('hasAirConditioner')}
               className="hidden"
             />
@@ -192,6 +206,7 @@ export default function RoomRegisterFeature() {
           >
             <input
               type="checkbox"
+              onClick={(e: any) => onClick(e, 'hasWifi')}
               {...register('hasWifi')}
               className="hidden"
             />
@@ -206,6 +221,7 @@ export default function RoomRegisterFeature() {
           >
             <input
               type="checkbox"
+              onClick={(e: any) => onClick(e, 'hasBarbeque')}
               {...register('hasBarbeque')}
               className="hidden"
             />
@@ -215,12 +231,13 @@ export default function RoomRegisterFeature() {
           <label
             className={cn(
               'border-2 rounded-md hover:bg-black/5 px-6 py-4 flex flex-col gap-2',
-              { 'border-2 border-black': !!watch('hasBarbeque') },
+              { 'border-2 border-black': !!watch('hasFreeParking') },
             )}
           >
             <input
               type="checkbox"
-              {...register('hasBarbeque')}
+              onClick={(e: any) => onClick(e, 'hasFreeParking')}
+              {...register('hasFreeParking')}
               className="hidden"
             />
             <LuParkingCircle className="text-lg md:text-2xl" />
