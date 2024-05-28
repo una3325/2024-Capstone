@@ -5,6 +5,7 @@ import {
   LocationType,
   RoomFormType,
   RoomType,
+  SearchProps,
 } from '@/interface'
 
 import { atom } from 'recoil'
@@ -66,4 +67,11 @@ export const roomFormState = atom<RoomFormType | null>({
     hasFreeParking: false,
   },
   effects_UNSTABLE: [persistAtom],
+})
+
+export const searchState = atom<SearchProps>({
+  key: 'search',
+  default: {
+    q: null,
+  },
 })

@@ -31,15 +31,15 @@ const LocationFilter = () => {
       isShow={detailFilter === 'location'}
     >
       <div className="flex flex-wrap gap-4 mt-4">
-        {['서울', '부산', '대구', '인천', '광주', '대전', '울산']?.map(
+        {['서울', '경기', '부산', '대구', '인천', '광주', '대전', '울산']?.map(
           (value) => (
             <button
               key={value}
               type="button"
               className={cn(
-                'border rounded-lg px-5 py-2.5 hover:bg-gray-200 focus:bg-rose-500',
+                'border rounded-lg px-5 py-2.5 hover:bg-gray-200 focus:bg-green-500',
                 {
-                  'bg-rose-600 text-white': filterValue.location === value,
+                  'bg-green-600 text-white': filterValue.location === value,
                 },
               )}
               onClick={() => {
@@ -54,6 +54,23 @@ const LocationFilter = () => {
             </button>
           ),
         )}
+        <button
+          className={cn(
+            'border rounded-lg px-5 py-2.5 hover:bg-gray-200 focus:bg-rose-500',
+            {
+              'bg-rose-600 text-white': filterValue.location === '',
+            },
+          )}
+          onClick={() => {
+            setFilterValue({
+              ...filterValue,
+              location: '',
+            })
+            setDetailFilter('checkIn')
+          }}
+        >
+          전체
+        </button>
       </div>
     </FilterLayout>
   )

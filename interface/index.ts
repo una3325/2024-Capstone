@@ -188,3 +188,6 @@ export interface RoomFormType {
   hasBarbeque?: boolean
   hasFreeParking?: boolean
 }
+export interface SearchProps {
+  q: string | null
+}
