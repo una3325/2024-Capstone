@@ -19,7 +19,7 @@ import { MdOutlineLocalLaundryService } from 'react-icons/md'
 import { LuParkingCircle, LuWind } from 'react-icons/lu'
 import { GiBarbecue } from 'react-icons/gi'
 
-interface RoomFeatureProps {
+export interface RoomFeatureProps {
   freeCancel?: boolean
   selfCheckIn?: boolean
   officeSpace?: boolean

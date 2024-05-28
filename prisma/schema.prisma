@@ -86,7 +86,8 @@ model Like {
 model Room {
   id                 Int       @id   @default(autoincrement())
   title              String 
-  images             String[] 
+  images             String[]
+  imageKeys         String[] 
   address            String 
   lat                String 
   lng                String 

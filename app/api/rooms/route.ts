@@ -130,3 +130,42 @@ export async function POST(req: Request) {
 
   return NextResponse.json(result, { status: 200 })
 }
+export async function PATCH(req: Request) {
+  const { searchParams } = new URL(req.url)
+  const id = searchParams.get('id') as string
+  const session = await getServerSession(authOptions)
+
+  if (!session?.user) {
+    return NextResponse.json({ error: 'unauthorized user' }, { status: 401 })
+  }
+
+  // 데이터 수정을 처리한다
+  const formData = await req.json()
+  const headers = {
+    Authorization: `KakaoAK ${process.env.KAKAO_CLIENT_ID}`,
+  }
+
+  const { data } = await axios.get(
+    `https://dapi.kakao.com/v2/local/search/address.json?query=${encodeURI(
+      formData.address,
+    )}`,
+    {
+      headers,
+    },
+  )
+
+  const result = await prisma.room.update({
+    where: {
+      id: parseInt(id),
+    },
+    data: {
+      ...formData,
+      price: parseInt(formData.price),
+      userId: session?.user?.id,
+      lat: data.documents[0].y,
+      lng: data.documents[0].x,
+    },
+  })
+
+  return NextResponse.json(result, { status: 200 })
+}

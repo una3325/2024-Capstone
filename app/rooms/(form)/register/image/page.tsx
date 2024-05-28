@@ -13,20 +13,18 @@ import { AiFillCamera } from 'react-icons/ai'
 import toast from 'react-hot-toast'
 import axios from 'axios'
 import { useState } from 'react'
-import { getDownloadURL, ref, uploadString } from 'firebase/storage'
+import {
+  deleteObject,
+  getDownloadURL,
+  ref,
+  uploadString,
+} from 'firebase/storage'
 import { storage } from '@/utils/firebaseApp'
 import { useSession } from 'next-auth/react'
 
 interface RoomImageProps {
   images?: string[]
 }
-
-const IMAGE_URLS = [
-  'https://loremflickr.com/500/500/hotel?lock=2398148622286848',
-  'https://loremflickr.com/500/500/travel?lock=46018368372736',
-  'https://loremflickr.com/500/500/nature?lock=7854363563261952',
-  'https://loremflickr.com/500/500/building?lock=7014313585803264',
-]
 
 export default function RoomRegisterImage() {
   const router = useRouter()
@@ -36,6 +34,7 @@ export default function RoomRegisterImage() {
   const [images, setImages] = useState<string[] | null>(null)
   const [disableSubmit, setDisableSubmit] = useState<boolean>(false)
   const resetRoomForm = useResetRecoilState(roomFormState)
+  let imageKeys: string[] = []
 
   const {
     register,
@@ -74,7 +73,9 @@ export default function RoomRegisterImage() {
 
     for (const imageFile of images) {
       // 참조 만들기
-      const imageRef = ref(storage, `${session?.user?.id}/${uuidv4()}`)
+      const imageKey = uuidv4()
+      const imageRef = ref(storage, `${session?.user?.id}/${imageKey}`)
+      imageKeys.push(imageKey)
       try {
         // uploadString으로 firebase에 이미지 업로드하기
         const data = await uploadString(imageRef, imageFile, 'data_url')
@@ -89,6 +90,19 @@ export default function RoomRegisterImage() {
     return uploadedImageUrls
   }
 
+  const deleteImages = () => {
+    imageKeys?.forEach((key) => {
+      const imageRef = ref(storage, `${session?.user.id}/${key}`)
+      deleteObject(imageRef)
+        .then(() => {
+          console.log('File Deleted: ', key)
+        })
+        .catch((error) => {
+          console.error(error)
+        })
+    })
+  }
+
   const onSubmit = async (data: RoomImageProps) => {
     // roomForm API 생성 요청
     // 생성 후에는 resetRoomForm으로 리코일 초기화
@@ -100,6 +114,7 @@ export default function RoomRegisterImage() {
           const result = await axios.post('/api/rooms', {
             ...roomForm,
             images: imageUrls,
+            imageKeys: imageKeys,
           })
 
           if (result.status === 200) {
@@ -113,6 +128,7 @@ export default function RoomRegisterImage() {
         .catch((error) => {
           console.error(error)
           toast.error('이미지 저장중에 문제가 발생했습니다. 다시 시도해주세요')
+          deleteImages()
         })
     } catch (e) {
       setDisableSubmit(false)
