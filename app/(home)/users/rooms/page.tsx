@@ -9,9 +9,13 @@ import Link from 'next/link'
 import React, { useEffect } from 'react'
 import { useRef } from 'react'
 import { useInfiniteQuery } from 'react-query'
+import { storage } from '@/utils/firebaseApp'
+import { ref, getDownloadURL, deleteObject } from 'firebase/storage'
+import { toast } from 'react-hot-toast'
+
 export default function UserRooms() {
-  const ref = useRef<HTMLDivElement | null>(null)
-  const pageRef = useIntersectionObserver(ref, {})
+  const observerRef = useRef<HTMLDivElement | null>(null)
+  const pageRef = useIntersectionObserver(observerRef, {})
   const isPageEnd = !!pageRef?.isIntersecting
   const { data: session } = useSession()
   const fetchMyRooms = async ({ pageParam = 1 }) => {
@@ -30,10 +34,52 @@ export default function UserRooms() {
     hasNextPage,
     isFetchingNextPage,
     fetchNextPage,
+    refetch,
   } = useInfiniteQuery(`rooms-user-${session?.user.id}`, fetchMyRooms, {
     getNextPageParam: (lastPage) =>
       lastPage?.data.length > 0 ? lastPage.page + 1 : undefined,
   })
+
+  async function deleteImages(imageKeys: string[] | null) {
+    if (imageKeys) {
+      imageKeys.forEach((key) => {
+        const imageRef = ref(storage, `${session?.user.id}/${key}`)
+        deleteObject(imageRef)
+          .then(() => {
+            console.log('File Deleted: ', key)
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+      })
+    }
+    return imageKeys
+  }
+
+  const handleDelete = async (data: RoomType) => {
+    const confirm = window.confirm('해당 숙소를 삭제하시겠습니까?')
+
+    if (confirm && data) {
+      try {
+        // 먼저 스토리지의 이미지 지우기
+        await deleteImages(data.imageKeys || null)
+        const result = await axios.delete(`/api/rooms?id=${data.id}`)
+
+        if (result.status === 200) {
+          toast.success('숙소를 삭제했습니다.')
+          refetch()
+        } else {
+          toast.error('데이터 삭제중 문제가 생겼습니다.')
+        }
+      } catch (e) {
+        console.log(e)
+        toast.error('다시 시도해주세요')
+      }
+    }
+  }
+
+  // ["e3b0c5e9-fc11-44fd-ac98-d09330348618","7f53f881-f53a-4696-87bf-c5157112061b"]
+
   useEffect(() => {
     let timerId: NodeJS.Timeout | undefined
     if (isPageEnd && hasNextPage) {
@@ -118,6 +164,9 @@ export default function UserRooms() {
                   <td className="px-6 py-4 min-w-[80px]">
                     <button
                       type="button"
+                      onClick={() => {
+                        handleDelete(room)
+                      }}
                       className="font-medium text-gray-600 hover:underline"
                     >
                       삭제
@@ -132,7 +181,7 @@ export default function UserRooms() {
       {(isFetching || hasNextPage || isFetchingNextPage) && (
         <Loader className="my-20" />
       )}
-      <div className="w-full touch-none h-10 mb-10" ref={ref} />
+      <div className="w-full touch-none h-10 mb-10" ref={observerRef} />
     </div>
   )
 }

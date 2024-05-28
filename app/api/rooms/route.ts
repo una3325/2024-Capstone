@@ -169,3 +169,25 @@ export async function PATCH(req: Request) {
 
   return NextResponse.json(result, { status: 200 })
 }
+export async function DELETE(req: Request) {
+  const { searchParams } = new URL(req.url)
+  const id = searchParams.get('id') as string
+  const session = await getServerSession(authOptions)
+
+  if (!session?.user) {
+    return NextResponse.json({ error: 'unauthorized user' }, { status: 401 })
+  }
+
+  // 데이터를 삭제한다
+  if (id) {
+    const result = await prisma.room.delete({
+      where: {
+        id: parseInt(id),
+      },
+    })
+
+    return NextResponse.json(result, { status: 200 })
+  }
+
+  return NextResponse.json(null, { status: 500 })
+}
