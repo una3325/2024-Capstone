@@ -47,7 +47,7 @@ export default function Navbar() {
         },
       )}
     >
-      <div className="grow basis-0 hidden  font-semibold text-lg sm:text-xl text-green-500 cursor-pointer sm:flex sm:gap-2">
+      <div className="grow basis-0 hidden  font-semibold text-lg sm:text-xl text-lime-500 cursor-pointer sm:flex sm:gap-2">
         <MdModeOfTravel className="text-4xl my-auto block" />
         <Link href="/" className="my-auto">
           Comma
@@ -69,7 +69,7 @@ export default function Navbar() {
           <button
             type="button"
             onClick={() => setShowFilter(true)}
-            className="bg-green-500 text-white rounded-full w-8 h-8 my-auto"
+            className="bg-lime-500 text-white rounded-full w-8 h-8 my-auto"
           >
             <AiOutlineSearch className="text-lg m-auto font-semibold" />
           </button>
@@ -163,7 +163,7 @@ export default function Navbar() {
             </div>
             <button
               type="button"
-              className="bg-green-600 text-white rounded-full h-10 mx-4 sm:w-24 mt-4 sm:mt-2 my-auto flex justify-center gap-1 px-3 py-2 hover:shadow hover:bg-green-500"
+              className="bg-lime-600 text-white rounded-full h-10 mx-4 sm:w-24 mt-4 sm:mt-2 my-auto flex justify-center gap-1 px-3 py-2 hover:shadow hover:bg-lime-500"
               onClick={() => {
                 setShowFilter(false)
                 setDetailFilter(null)

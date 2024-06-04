@@ -56,9 +56,9 @@ const LocationFilter = () => {
         )}
         <button
           className={cn(
-            'border rounded-lg px-5 py-2.5 hover:bg-gray-200 focus:bg-rose-500',
+            'border rounded-lg px-5 py-2.5 hover:bg-gray-200 focus:bg-lime-500',
             {
-              'bg-rose-600 text-white': filterValue.location === '',
+              'bg-lime-600 text-white': filterValue.location === '',
             },
           )}
           onClick={() => {
