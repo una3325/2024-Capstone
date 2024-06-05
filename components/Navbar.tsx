@@ -9,6 +9,7 @@ import { RxDividerVertical } from 'react-icons/rx'
 import { AiOutlineSearch } from 'react-icons/ai'
 import { AiOutlineMenu } from 'react-icons/ai'
 import { AiOutlineUser } from 'react-icons/ai'
+import { GiNightSleep } from 'react-icons/gi'
 
 import cn from 'classnames'
 
@@ -48,7 +49,7 @@ export default function Navbar() {
       )}
     >
       <div className="grow basis-0 hidden  font-semibold text-lg sm:text-xl text-lime-500 cursor-pointer sm:flex sm:gap-2">
-        <MdModeOfTravel className="text-4xl my-auto block" />
+        <GiNightSleep className="text-4xl my-auto block" />
         <Link href="/" className="my-auto">
           Comma
         </Link>

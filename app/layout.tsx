@@ -6,8 +6,8 @@ import { NextLayout, NextProvider } from './providers'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Fastcampus Nextbnb로 여행하기',
-  description: 'Fastcampus Nextbnb로 여행을 계획해보세요',
+  title: 'Comma로 숙박 예약하기',
+  description: 'Comma로 여행을 계획해보세요',
 }
 
 export default function RootLayout({
