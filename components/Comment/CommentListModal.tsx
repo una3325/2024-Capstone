@@ -1,5 +1,4 @@
 'use client'
-
 /* eslint-disable @next/next/no-img-element */
 import { Dialog, Transition } from '@headlessui/react'
 import React, { Fragment, useEffect, useRef } from 'react'
@@ -9,9 +8,6 @@ import { useInfiniteQuery } from 'react-query'
 import { CommentApiType, CommentType } from '@/interface'
 import useIntersectionObserver from '@/hooks/useIntersectionObserver'
 import { Loader } from '../Loader'
-
-import dayjs from 'dayjs'
-import 'dayjs/locale/ko'
 
 export default function CommentListModal({
   isOpen,
@@ -49,7 +45,7 @@ export default function CommentListModal({
 
   useEffect(() => {
     let timerId: NodeJS.Timeout | undefined
-
+    console.log(isPageEnd, hasNextPage)
     if (isPageEnd && hasNextPage) {
       timerId = setTimeout(() => {
         fetchNextPage()
@@ -58,7 +54,6 @@ export default function CommentListModal({
 
     return () => clearTimeout(timerId)
   }, [isPageEnd, hasNextPage, fetchNextPage])
-
   return (
     <>
       <Transition appear show={isOpen} as={Fragment}>
@@ -125,9 +120,7 @@ export default function CommentListModal({
                                   {comment?.user?.name || '-'}
                                 </h1>
                                 <div className="text-gray-500 text-xs">
-                                  {dayjs(comment?.createdAt)?.format(
-                                    'YYYY-MM-DD HH:MM:ss',
-                                  )}
+                                  {comment?.createdAt}
                                 </div>
                               </div>
                             </div>

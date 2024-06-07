@@ -1,6 +1,7 @@
 'use client'
 
 import { useQuery } from 'react-query'
+
 import { RoomType } from '@/interface'
 import CommentForm from './CommentForm'
 import CommentList from './CommentList'
@@ -20,5 +21,12 @@ export default function Comment({ room }: { room: RoomType }) {
     enabled: !!room.id,
   })
 
-  return <div className="border-b border-gray-300 py-8 px-4"></div>
+  return (
+    <div className="border-b border-gray-300 py-8 px-4">
+      <CommentList comments={comments} isLoading={isLoading} roomId={room.id} />
+      <CommentForm room={room} refetch={refetch} />
+      <CommentList comments={comments} isLoading={isLoading} roomId={room.id} />
+      <CommentForm room={room} refetch={refetch} />
+    </div>
+  )
 }

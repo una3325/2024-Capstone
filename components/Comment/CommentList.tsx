@@ -1,12 +1,11 @@
 'use client'
+
 /* eslint-disable @next/next/no-img-element */
 import { useState } from 'react'
 import { BiChevronRight } from 'react-icons/bi'
 import CommentListModal from './CommentListModal'
 import { CommentApiType } from '@/interface'
 import { Loader } from '../Loader'
-import dayjs from 'dayjs'
-import 'dayjs/locale/ko'
 
 export default function CommentList({
   isLoading,
@@ -51,7 +50,7 @@ export default function CommentList({
                     {comment?.user?.name || '-'}
                   </h1>
                   <div className="text-gray-500 text-xs">
-                    {dayjs(comment?.createdAt)?.format('YYYY-MM-DD HH:MM:ss')}
+                    {comment?.createdAt}
                   </div>
                 </div>
               </div>
