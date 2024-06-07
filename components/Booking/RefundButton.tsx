@@ -43,7 +43,7 @@ export default function RefundButton({ booking, canRefund }: RefundProps) {
       <section className="flex flex-col gap-4">
         {booking?.status === 'CANCEL' || isRefund ? (
           <button
-            className="bg-rose-600 hover:bg-rose-500 text-white rounded-md disabled:bg-gray-300 px-5 py-2.5"
+            className="bg-lime-600 hover:bg-lime-500 text-white rounded-md disabled:bg-gray-300 px-5 py-2.5"
             disabled
           >
             예약 취소 완료
@@ -53,7 +53,7 @@ export default function RefundButton({ booking, canRefund }: RefundProps) {
             type="button"
             disabled={!canRefund}
             onClick={openModal}
-            className="bg-rose-600 hover:bg-rose-500 text-white rounded-md disabled:bg-gray-300 px-5 py-2.5"
+            className="bg-lime-600 hover:bg-lime-500 text-white rounded-md disabled:bg-gray-300 px-5 py-2.5"
           >
             예약 취소하기
           </button>
@@ -70,7 +70,7 @@ export default function RefundButton({ booking, canRefund }: RefundProps) {
           <button
             type="button"
             onClick={handleRefund}
-            className="mt-8 bg-rose-600 hover:bg-rose-500 text-white rounded-md px-5 py-2.5"
+            className="mt-8 bg-lime-600 hover:bg-lime-500 text-white rounded-md px-5 py-2.5"
           >
             예약 취소하기
           </button>

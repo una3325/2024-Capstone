@@ -7,8 +7,8 @@ import { useParams } from 'next/navigation'
 import { useRouter } from 'next/navigation'
 import { toast } from 'react-hot-toast'
 
-export default function SubmitButton({ title }: { title: string }) {
-  const { status, data: session } = useSession()
+export default function SubmitButton() {
+  const { status } = useSession()
   const searchParams = useSearchParams()
   const params = useParams()
   const router = useRouter()
@@ -28,13 +28,11 @@ export default function SubmitButton({ title }: { title: string }) {
       guestCount: guestCount,
       totalAmount: totalAmount,
       totalDays: totalDays,
-      status: 'PENDING',
     })
 
     if (res.status === 200) {
-      router.replace(
-        `/payments?customerKey=${session?.user.id}&roomTitle=${title}&checkIn=${checkIn}&checkOut=${checkOut}&guestCount=${guestCount}&totalAmount=${totalAmount}&totalDays=${totalDays}&bookingId=${res?.data.id}`,
-      )
+      toast.success('예약을 완료했습니다.')
+      router.replace(`/users/bookings/${res.data.id}`)
     } else {
       toast.error('다시 시도해주세요.')
     }
@@ -46,7 +44,7 @@ export default function SubmitButton({ title }: { title: string }) {
         type="button"
         disabled={status === 'unauthenticated'}
         onClick={handleSubmit}
-        className="bg-rose-600 hover:bg-rose-500 px-6 py-3 text-white rounded-md w-full disabled:bg-gray-300"
+        className="bg-lime-600 hover:bg-lime-500 px-6 py-3 text-white rounded-md w-full disabled:bg-gray-300"
       >
         확인 및 결제
       </button>

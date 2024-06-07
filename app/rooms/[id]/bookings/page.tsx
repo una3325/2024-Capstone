@@ -3,7 +3,6 @@ import { BLUR_DATA_URL } from '@/constants'
 import { BookingParamsProps, RoomType } from '@/interface'
 import Image from 'next/image'
 import Link from 'next/link'
-
 export default async function BookingPage({
   params,
   searchParams,
@@ -15,7 +14,6 @@ export default async function BookingPage({
   const totalAmount = searchParams.totalAmount
   const totalDays = searchParams.totalDays
   const data: RoomType = await getData(id)
-
   return (
     <div className="my-28 max-w-6xl mx-auto px-4">
       <div className="mt-32">
@@ -38,7 +36,6 @@ export default async function BookingPage({
           </div>
           <div className="flex flex-col gap-6 border-y my-8 py-8">
             <h2 className="text-lg md:text-2xl font-semibold">숙소 정보</h2>
-
             <div className="flex border-b gap-4 pb-6">
               <Image
                 src={data?.images?.[0] || '/images/logo.png'}
@@ -71,14 +68,13 @@ export default async function BookingPage({
                 {parseInt(totalAmount)?.toLocaleString()}원
               </div>
             </div>
-            <SubmitButton title={data.title} />
+            <SubmitButton />
           </div>
         </div>
       </div>
     </div>
   )
 }
-
 async function getData(id: string) {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/api/rooms?id=${id}`,
@@ -86,10 +82,8 @@ async function getData(id: string) {
       cache: 'no-store',
     },
   )
-
   if (!res.ok) {
     throw new Error('Failed to fetch data')
   }
-
   return res.json()
 }

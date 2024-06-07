@@ -1,6 +1,5 @@
-import RefundButton from '@/components/Booking/RefundButton'
 import { BLUR_DATA_URL } from '@/constants'
-import { BookingType, PaymentType } from '@/interface'
+import { BookingType } from '@/interface'
 import dayjs from 'dayjs'
 import Image from 'next/image'
 
@@ -15,7 +14,7 @@ export default async function BookingPage({
 
   return (
     <div className="max-w-5xl mx-auto px-4 pt-10 pb-20">
-      <h1 className="text-xl md:text-2xl font-semibold">예약 상세 내역</h1>
+      <h1 className="text-xl md:text-3xl font-semibold">예약 상세 내역</h1>
       <div className="rounded-md border border-gray-300 p-6 mt-10">
         <section className="flex border-b gap-4 pb-6">
           <Image
@@ -65,81 +64,16 @@ export default async function BookingPage({
             </div>
           </div>
         </section>
-        <RefundButton booking={booking} canRefund={canRefund} />
-      </div>
-      <h1 className="text-xl md:text-2xl font-semibold mt-16">
-        결제 상세 내역
-      </h1>
-      {booking?.payments && booking?.payments?.length > 0 ? (
-        booking?.payments?.map((payment: PaymentType) => (
-          <div
-            className="rounded-md border border-gray-300 p-6 mt-10"
-            key={payment.id}
+        <section className="flex flex-col gap-4">
+          <button
+            type="button"
+            disabled={!canRefund}
+            className="bg-lime-600 hover:bg-lime-500 text-white rounded-md disabled:bg-gray-300 px-5 py-2.5"
           >
-            <div className="flex flex-col gap-4 pb-4 pt-2">
-              <h3 className="font-semibold text-lg md:text-xl">주문 내역</h3>
-              <div className="rounded-md border-black p-2 border-2 cursor-pointer hover:bg-black/5">
-                <h3 className="font-semibold">주문</h3>
-                <p className="text-gray-800 text-sm mt-1">
-                  {payment?.orderName}
-                </p>
-              </div>
-            </div>
-            <div className="flex flex-col gap-4 pb-4 pt-2">
-              <h3 className="font-semibold text-lg md:text-xl">결제 내역</h3>
-              <div className="rounded-md border-black p-2 border-2 cursor-pointer hover:bg-black/5">
-                <h3 className="font-semibold">결제 수단</h3>
-                <p className="text-gray-800 text-sm mt-1">{payment?.method}</p>
-              </div>
-              <div className="rounded-md border-black p-2 border-2 cursor-pointer hover:bg-black/5">
-                <h3 className="font-semibold">결제 상태</h3>
-                <p className="text-gray-800 text-sm mt-1">{payment?.status}</p>
-                <h3 className="font-semibold mt-2">상점아이디 (MID)</h3>
-                <p className="text-gray-800 text-sm mt-1">
-                  {payment?.mId || '-'}
-                </p>
-                <h3 className="font-semibold mt-2">결제 방식</h3>
-                <p className="text-gray-800 text-sm mt-1">
-                  {payment?.method || '-'}
-                </p>
-                <h3 className="font-semibold mt-2">카드 정보</h3>
-                <p className="text-gray-800 text-sm mt-1">
-                  {payment?.cardNumber || '-'}
-                </p>
-              </div>
-            </div>
-            <div className="flex flex-col gap-4 pb-4 pt-2">
-              <h3 className="font-semibold text-lg md:text-xl">결제 금액</h3>
-              <div className="rounded-md border-black p-2 border-2 cursor-pointer hover:bg-black/5">
-                <p className="text-gray-800 text-sm mt-1">
-                  {payment?.amount?.toLocaleString()}원
-                </p>
-              </div>
-            </div>
-            <div className="flex flex-col gap-4 pb-4 pt-2">
-              <h3 className="font-semibold text-lg md:text-xl">결제 일시</h3>
-              <div className="rounded-md border-black p-2 border-2 cursor-pointer hover:bg-black/5">
-                <p className="text-gray-800 text-sm mt-1">
-                  {dayjs(payment?.approvedAt)?.format('YYYY-MM-DD HH:MM:ss')}
-                </p>
-              </div>
-            </div>
-            <div className="mt-8">
-              <a
-                target="_blank"
-                href={payment?.receiptUrl}
-                className="bg-gray-800 text-white hover:bg-gray-600 px-6 py-3 rounded-md"
-              >
-                영수증 확인
-              </a>
-            </div>
-          </div>
-        ))
-      ) : (
-        <div className="rounded-md border border-gray-300 p-6 mt-10 text-gray-600">
-          결제 내역이 없습니다.
-        </div>
-      )}
+            예약 취소하기
+          </button>
+        </section>
+      </div>
     </div>
   )
 }

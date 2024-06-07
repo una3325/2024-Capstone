@@ -13,8 +13,6 @@ export default function SignInPage() {
   const router = useRouter()
   const { status } = useSession()
 
-  console.log(status)
-
   const handleClickGoogle = () => {
     try {
       signIn('google', { callbackUrl: '/' })
