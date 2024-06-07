@@ -25,8 +25,6 @@ export default function Comment({ room }: { room: RoomType }) {
     <div className="border-b border-gray-300 py-8 px-4">
       <CommentList comments={comments} isLoading={isLoading} roomId={room.id} />
       <CommentForm room={room} refetch={refetch} />
-      <CommentList comments={comments} isLoading={isLoading} roomId={room.id} />
-      <CommentForm room={room} refetch={refetch} />
     </div>
   )
 }
