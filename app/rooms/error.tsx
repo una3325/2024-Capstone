@@ -17,7 +17,7 @@ export default function Error({
   return (
     <div className="text-center h-[60vh] flex flex-col justify-center">
       <div>
-        <h2 className="text-3xl font-semibold text-rose-700">
+        <h2 className="text-3xl font-semibold text-lime-700">
           Something went wrong!
         </h2>
         <p className="text-gray-500 mt-4 font-semibold">
@@ -28,7 +28,7 @@ export default function Error({
         </p>
         <div className="mt-8">
           <button
-            className="bg-rose-700 hover:shadow-lg text-white rounded-xl px-4 py-2.5"
+            className="bg-lime-700 hover:shadow-lg text-white rounded-xl px-4 py-2.5"
             onClick={
               // Attempt to recover by trying to re-render the segment
               () => reset()
