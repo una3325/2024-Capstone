@@ -1,4 +1,5 @@
 'use client'
+
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { signIn, useSession } from 'next-auth/react'
@@ -11,6 +12,8 @@ import toast from 'react-hot-toast'
 export default function SignInPage() {
   const router = useRouter()
   const { status } = useSession()
+
+  console.log(status)
 
   const handleClickGoogle = () => {
     try {
@@ -44,6 +47,7 @@ export default function SignInPage() {
       router.replace('/')
     }
   }, [router, status])
+
   return (
     <div className="max-w-xl mx-auto pt-10 pb-24">
       <div className="flex flex-col gap-6">
@@ -52,7 +56,7 @@ export default function SignInPage() {
         </h1>
         <hr className="border-b-gray-300" />
         <div className="text-xl md:text-2xl font-semibold">
-          Fastcampus Nextbnb에 오신 것을 환영합니다.
+          Comma에 오신 것을 환영합니다.
         </div>
       </div>
       <div className="text-sm text-gray-500 mt-2">

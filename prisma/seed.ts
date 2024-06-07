@@ -1,7 +1,6 @@
 import { PrismaClient } from '@prisma/client'
 import { fakerKO as faker } from '@faker-js/faker'
 
-
 const prisma = new PrismaClient()
 export const CATEGORY = [
   '전망좋은',
@@ -49,7 +48,7 @@ async function seedUsers() {
 async function seedRooms() {
   const totalUsers = await prisma.user.findMany()
   if (totalUsers?.length > 1) {
-    Array.from({ length: 100 }, (v, i) => i).forEach(async () => {
+    Array.from({ length: 40 }, (v, i) => i).forEach(async () => {
       const randomUserIndex = Math.floor(Math.random() * totalUsers.length)
       const randomUser = totalUsers[randomUserIndex]
 
