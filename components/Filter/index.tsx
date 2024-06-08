@@ -37,9 +37,9 @@ const LocationFilter = () => {
               key={value}
               type="button"
               className={cn(
-                'border rounded-lg px-5 py-2.5 hover:bg-gray-200 focus:bg-green-500',
+                'border rounded-lg px-5 py-2.5 hover:bg-gray-200 focus:bg-lime-500',
                 {
-                  'bg-green-600 text-white': filterValue.location === value,
+                  'bg-lime-600 text-white': filterValue.location === value,
                 },
               )}
               onClick={() => {

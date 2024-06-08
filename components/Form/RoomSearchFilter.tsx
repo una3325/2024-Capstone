@@ -15,7 +15,7 @@ export default function RoomSearchFilter() {
             setQ({ q: e?.target?.value })
           }}
           placeholder="숙소명 검색"
-          className="w-full block p-3 text-sm border border-gray-300 rounded-lg outline-none focus:border-rose-500 text-gray-800"
+          className="w-full block p-3 text-sm border border-gray-300 rounded-lg outline-none focus:border-lime-500 text-gray-800"
         />
         <AiOutlineSearch className="w-6 h-6" />
       </div>

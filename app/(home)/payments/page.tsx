@@ -13,7 +13,7 @@ import { useSession } from 'next-auth/react'
 import { toast } from 'react-hot-toast'
 import axios from 'axios'
 
-const clientKey = 'test_ck_ALnQvDd2VJxlmO25aWae8Mj7X41m'
+const clientKey = 'test_ck_Z1aOwX7K8mEba00kpj0P8yQxzvNP'
 
 export default function PaymentPage() {
   const router = useRouter()
