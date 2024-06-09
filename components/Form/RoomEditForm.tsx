@@ -178,10 +178,10 @@ export default function RoomEditForm({ data }: { data: RoomType }) {
           className="outline-none px-4 py-2 rounded-lg border-2 focus:border-black"
         />
         {errors.title && errors.title.type === 'required' && (
-          <span className="text-red-600 text-sm">필수 항목입니다.</span>
+          <span className="text-lime-600 text-sm">필수 항목입니다.</span>
         )}
         {errors.title && errors.title.type === 'maxLength' && (
-          <span className="text-red-600 text-sm">
+          <span className="text-lime-600 text-sm">
             설명은 30자 이내로 작성해주세요.
           </span>
         )}
@@ -202,7 +202,7 @@ export default function RoomEditForm({ data }: { data: RoomType }) {
           ))}
         </select>
         {errors.category && errors.category.type === 'required' && (
-          <span className="text-red-600 text-sm">필수 항목입니다.</span>
+          <span className="text-lime-600 text-sm">필수 항목입니다.</span>
         )}
       </div>
       <div className="flex flex-col gap-2">
@@ -215,7 +215,7 @@ export default function RoomEditForm({ data }: { data: RoomType }) {
           className="outline-none px-4 py-2 rounded-lg border-2 focus:border-black resize-none"
         />
         {errors.desc && errors.desc.type === 'required' && (
-          <span className="text-red-600 text-sm">필수 항목입니다.</span>
+          <span className="text-lime-600 text-sm">필수 항목입니다.</span>
         )}
       </div>
       <div className="flex flex-col gap-2">
@@ -228,7 +228,7 @@ export default function RoomEditForm({ data }: { data: RoomType }) {
           className="outline-none px-4 py-2 rounded-lg border-2 focus:border-black"
         />
         {errors.price && errors.price.type === 'required' && (
-          <span className="text-red-600 text-sm">필수 항목입니다.</span>
+          <span className="text-lime-600 text-sm">필수 항목입니다.</span>
         )}
       </div>
       <div className="flex flex-col gap-2">
@@ -241,10 +241,10 @@ export default function RoomEditForm({ data }: { data: RoomType }) {
           className="outline-none px-4 py-2 rounded-lg border-2 focus:border-black resize-none"
         />
         {errors.bedroomDesc && errors.bedroomDesc.type === 'required' && (
-          <span className="text-red-600 text-sm">필수 항목입니다.</span>
+          <span className="text-lime-600 text-sm">필수 항목입니다.</span>
         )}
         {errors.bedroomDesc && errors.bedroomDesc.type === 'maxLength' && (
-          <span className="text-red-600 text-sm">
+          <span className="text-lime-600 text-sm">
             설명은 100자 이내로 작성해주세요.
           </span>
         )}
@@ -283,7 +283,7 @@ export default function RoomEditForm({ data }: { data: RoomType }) {
               <div className="mt-4 flex text-sm leading-6 text-gray-600">
                 <label
                   htmlFor="file-upload"
-                  className="relative cursor-pointer rounded-md bg-white font-semibold text-rose-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-rose-600 focus-within:ring-offset-2 hover:text-rose-500"
+                  className="relative cursor-pointer rounded-md bg-white font-semibold text-lime-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-lime-600 focus-within:ring-offset-2 hover:text-lime-500"
                 >
                   <span>최대 5장의 사진을</span>
                   <input
@@ -305,7 +305,7 @@ export default function RoomEditForm({ data }: { data: RoomType }) {
           </div>
         </div>
         {errors?.images && errors?.images?.type === 'required' && (
-          <span className="text-red-600 text-sm">필수 항목입니다.</span>
+          <span className="text-lime-600 text-sm">필수 항목입니다.</span>
         )}
       </div>
       <div className="mt-10 max-w-lg mx-auto flex flex-wrap gap-4">
@@ -332,7 +332,7 @@ export default function RoomEditForm({ data }: { data: RoomType }) {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="rounded-lg bg-rose-600 hover:bg-rose-500 px-8 py-2.5 font-semibold text-white disabled:bg-gray-300"
+          className="rounded-lg bg-lime-600 hover:bg-lime-500 px-8 py-2.5 font-semibold text-white disabled:bg-gray-300"
         >
           수정하기
         </button>

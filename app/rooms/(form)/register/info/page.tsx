@@ -1,7 +1,7 @@
 'use client'
 
 import { roomFormState } from '@/atom'
-import NextButton from '@/components/Form/NextButton'
+import NextButton from '@/components//Form/NextButton'
 import Stepper from '@/components/Form/Stepper'
 import { useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react'
@@ -65,10 +65,10 @@ export default function RoomRegisterInfo() {
             className="outline-none px-4 py-2 rounded-lg border-2 focus:border-black"
           />
           {errors.title && errors.title.type === 'required' && (
-            <span className="text-red-600 text-sm">필수 항목입니다.</span>
+            <span className="text-lime-600 text-sm">필수 항목입니다.</span>
           )}
           {errors.title && errors.title.type === 'maxLength' && (
-            <span className="text-red-600 text-sm">
+            <span className="text-lime-600 text-sm">
               설명은 30자 이내로 작성해주세요.
             </span>
           )}
@@ -83,7 +83,7 @@ export default function RoomRegisterInfo() {
             className="outline-none px-4 py-2 rounded-lg border-2 focus:border-black resize-none"
           />
           {errors.desc && errors.desc.type === 'required' && (
-            <span className="text-red-600 text-sm">필수 항목입니다.</span>
+            <span className="text-lime-600 text-sm">필수 항목입니다.</span>
           )}
         </div>
         <div className="flex flex-col gap-2">
@@ -96,7 +96,7 @@ export default function RoomRegisterInfo() {
             className="outline-none px-4 py-2 rounded-lg border-2 focus:border-black"
           />
           {errors.price && errors.price.type === 'required' && (
-            <span className="text-red-600 text-sm">필수 항목입니다.</span>
+            <span className="text-lime-600 text-sm">필수 항목입니다.</span>
           )}
         </div>
         <div className="flex flex-col gap-2">
@@ -109,10 +109,10 @@ export default function RoomRegisterInfo() {
             className="outline-none px-4 py-2 rounded-lg border-2 focus:border-black resize-none"
           />
           {errors.bedroomDesc && errors.bedroomDesc.type === 'required' && (
-            <span className="text-red-600 text-sm">필수 항목입니다.</span>
+            <span className="text-lime-600 text-sm">필수 항목입니다.</span>
           )}
           {errors.bedroomDesc && errors.bedroomDesc.type === 'maxLength' && (
-            <span className="text-red-600 text-sm">
+            <span className="text-lime-600 text-sm">
               설명은 100자 이내로 작성해주세요.
             </span>
           )}

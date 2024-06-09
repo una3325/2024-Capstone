@@ -53,13 +53,13 @@ export default function AddressSearch({
           <button
             type="button"
             onClick={() => setIsOpen((val) => !val)}
-            className="bg-rose-600 hover:bg-rose-500 py-1.5 px-2 rounded text-white"
+            className="bg-lime-600 hover:bg-lime-500 py-1.5 px-2 rounded text-white"
           >
             주소 검색
           </button>
         </div>
         {errors.address && errors.address.type === 'required' && (
-          <span className="text-red-600 text-sm">필수 항목입니다.</span>
+          <span className="text-lime-600 text-sm">필수 항목입니다.</span>
         )}
       </div>
       {isOpen && (

@@ -55,6 +55,7 @@ export const roomFormState = atom<RoomFormType | null>({
     category: '',
     lat: '',
     lng: '',
+    userId: 0,
     freeCancel: false,
     selfCheckIn: false,
     officeSpace: false,
